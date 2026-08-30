@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title><%= title %></title>
+
+</head>
+
+
+<body>
+
+    <h1><%= title %></h1>
+
+
+    <!-- Show error -->
+
+    <% if (error) { %>
+
+        <h3 style="color:red">
+
+            <%= error %>
+
+        </h3>
+
+    <% } %>
+
+
+    <!-- Show successful user details -->
+
+    <% if (user) { %>
+
+        <h2 style="color:green">
+
+            Registration Successful!
+
+        </h2>
+
+        <p>
+
+            Username: <%= user.username %>
+
+        </p>
+
+        <p>
+
+            Age: <%= user.age %>
+
+        </p>
+
+    <% } %>
+
+
+    <!-- Registration form -->
+
+    <form action="/register" method="POST">
+
+
+        <label>Username:</label>
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Enter username"
+        >
+
+        <br><br>
+
+
+        <label>Age:</label>
+
+        <input
+            type="number"
+            name="age"
+            placeholder="Enter age"
+        >
+
+        <br><br>
+
+
+        <button type="submit">
+
+            Register
+
+        </button>
+
+
+    </form>
+
+
+</body>
+
+</html>
