@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Student Management System</title>
+
+
+    <style>
+
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            margin: 0;
+
+            padding: 40px 20px;
+
+            background-color: var(--bg);
+
+            color: var(--text);
+
+            display: flex;
+
+            justify-content: center;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 600px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 10px 15px -3px
+                rgba(0, 0, 0, 0.1);
+
+        }
+
+
+        h1 {
+
+            font-weight: 600;
+
+            font-size: 1.5rem;
+
+            margin-bottom: 20px;
+
+            color: var(--primary);
+
+        }
+
+
+        /* Form Styling */
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        input {
+
+            padding: 12px;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: border-color 0.2s;
+
+        }
+
+
+        input:focus {
+
+            border-color: var(--primary);
+
+        }
+
+
+        button[type="submit"] {
+
+            padding: 12px;
+
+            background: var(--primary);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: background 0.2s;
+
+        }
+
+
+        button[type="submit"]:hover {
+
+            background: var(--primary-hover);
+
+        }
+
+
+        /* List Styling */
+
+        h3 {
+
+            margin-top: 0;
+
+            border-bottom:
+                2px solid #f1f5f9;
+
+            padding-bottom: 10px;
+
+        }
+
+
+        ul {
+
+            list-style: none;
+
+            padding: 0;
+
+        }
+
+
+        li {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px;
+
+            border-bottom:
+                1px solid #f1f5f9;
+
+            transition: background 0.2s;
+
+        }
+
+
+        li:hover {
+
+            background-color: #f8fafc;
+
+        }
+
+
+        .student-info {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .student-name {
+
+            font-weight: 600;
+
+            color: #334155;
+
+        }
+
+
+        .student-meta {
+
+            font-size: 12px;
+
+            color: #64748b;
+
+        }
+
+
+        .delete-btn {
+
+            padding: 6px 12px;
+
+            font-size: 13px;
+
+            color: var(--danger);
+
+            border: 1px solid var(--danger);
+
+            border-radius: 4px;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+        }
+
+
+        .delete-btn:hover {
+
+            background: var(--danger);
+
+            color: white;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+        <div class="card">
+
+
+            <h1>
+                Student Management System
+            </h1>
+
+
+            <!-- =================================
+                 CREATE FORM
+                 ================================= -->
+
+            <form
+                id="studentForm"
+                class="form-group"
+            >
+
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Full Name"
+                    required
+                >
+
+
+                <input
+                    type="number"
+                    id="rollNumber"
+                    placeholder="Roll Number"
+                    required
+                >
+
+
+                <input
+                    type="text"
+                    id="course"
+                    placeholder="Assigned Course"
+                    required
+                >
+
+
+                <button type="submit">
+                    Enroll Student
+                </button>
+
+
+            </form>
+
+
+            <!-- =================================
+                 STUDENT LIST
+                 ================================= -->
+
+            <h3>
+                Active Enrollments
+            </h3>
+
+
+            <ul id="studentList">
+
+
+                <% students.forEach(student => { %>
+
+
+                    <li>
+
+
+                        <div class="student-info">
+
+
+                            <span class="student-name">
+
+                                <%= student.name %>
+
+                            </span>
+
+
+                            <span class="student-meta">
+
+                                Roll:
+                                <%= student.rollNumber %>
+
+                                |
+
+                                Course:
+                                <%= student.course %>
+
+                                |
+
+                                ID:
+                                <%= student._id %>
+
+                            </span>
+
+
+                        </div>
+
+
+                        <button
+                            onclick="deleteStudent('<%= student._id %>')"
+                            class="delete-btn"
+                        >
+
+                            Delete
+
+                        </button>
+
+
+                    </li>
+
+
+                <% }) %>
+
+
+            </ul>
+
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+
+        // ==========================================
+        // CREATE STUDENT
+        // ==========================================
+
+        document
+            .getElementById('studentForm')
+            .addEventListener(
+                'submit',
+                async (e) => {
+
+                    e.preventDefault();
+
+
+                    const studentData = {
+
+                        name:
+                            document
+                            .getElementById('name')
+                            .value,
+
+                        rollNumber:
+                            document
+                            .getElementById('rollNumber')
+                            .value,
+
+                        course:
+                            document
+                            .getElementById('course')
+                            .value
+
+                    };
+
+
+                    const response =
+                        await fetch('/students', {
+
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    studentData
+                                )
+
+                        });
+
+
+                    if (response.ok) {
+
+                        window.location.reload();
+
+                    }
+                    else {
+
+                        alert(
+                            "Error enrolling student"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // ==========================================
+        // DELETE STUDENT
+        // ==========================================
+
+        async function deleteStudent(id) {
+
+
+            if (
+                !confirm(
+                    "Remove this student record?"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const response =
+                await fetch(
+                    `/students/${id}`,
+                    {
+                        method: 'DELETE'
+                    }
+                );
+
+
+            if (response.ok) {
+
+                window.location.reload();
+
+            }
+            else {
+
+                alert(
+                    "Error deleting student"
+                );
+
+            }
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
