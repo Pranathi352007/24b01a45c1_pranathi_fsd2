@@ -7,10 +7,7 @@ const PORT = 3000;
 // Middleware
 app.use(express.json());
 
-
-// ==========================================
 // STEP 1 & 2: MongoDB Atlas Connection
-// ==========================================
 
 const dbURI =
     "mongodb+srv://<24b01a45c1_db_username>:ppX5kv6ibINainSD@cluster0.r72ubev.mongodb.net/LabDB?appName=Cluster0";
@@ -23,10 +20,7 @@ mongoose.connect(dbURI)
         console.error("Database connection error:", err);
     });
 
-
-// ==========================================
 // STEP 3: Create Schema and Model
-// ==========================================
 
 const studentSchema = new mongoose.Schema({
 
@@ -59,16 +53,10 @@ const Student = mongoose.model(
     studentSchema
 );
 
-
-// ==========================================
 // STEP 4 & 5: CRUD Operations
-// ==========================================
 
-
-// ==========================================
 // CREATE
 // POST /students
-// ==========================================
 
 app.post('/students', async (req, res) => {
 
@@ -92,11 +80,8 @@ app.post('/students', async (req, res) => {
 
 });
 
-
-// ==========================================
 // READ
 // GET /students
-// ==========================================
 
 app.get('/students', async (req, res) => {
 
@@ -118,11 +103,8 @@ app.get('/students', async (req, res) => {
 
 });
 
-
-// ==========================================
 // UPDATE
 // PUT /students/:id
-// ==========================================
 
 app.put('/students/:id', async (req, res) => {
 
@@ -157,11 +139,8 @@ app.put('/students/:id', async (req, res) => {
 
 });
 
-
-// ==========================================
 // DELETE
 // DELETE /students/:id
-// ==========================================
 
 app.delete('/students/:id', async (req, res) => {
 
@@ -196,10 +175,7 @@ app.delete('/students/:id', async (req, res) => {
 
 });
 
-
-// ==========================================
 // START EXPRESS SERVER
-// ==========================================
 
 app.listen(PORT, () => {
 
