@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 // ==========================================
 
 const dbURI =
-    "mongodb+srv://<24b01a45c1_db_username>:ppX5kv6ibINainSD@cluster0.r72ubev.mongodb.net/LabDB?appName=Cluster0";
+    "mongodb://24b01a45c1_db_user:<db_password>@ac-q9axim9-shard-00-00.r72ubev.mongodb.net:27017,ac-q9axim9-shard-00-01.r72ubev.mongodb.net:27017,ac-q9axim9-shard-00-02.r72ubev.mongodb.net:27017/?ssl=true&replicaSet=atlas-p89wja-shard-0&authSource=admin&appName=Cluster0";
 
 mongoose.connect(dbURI)
     .then(() => {
@@ -38,10 +38,7 @@ mongoose.connect(dbURI)
         console.error("Database connection error:", err);
     });
 
-
-// ==========================================
 // SCHEMA
-// ==========================================
 
 const studentSchema = new mongoose.Schema({
 
